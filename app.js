@@ -57,6 +57,6 @@ const randomDate = (start, end) => new Date(start.getTime() + Math.random() * (e
 
 const d = randomDate(new Date(2012, 0, 1), new Date());
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Example app listening on port ${process.env.PORT || 5000}`)
 })
