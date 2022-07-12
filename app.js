@@ -7,6 +7,9 @@ var fs = require('fs');
 app.use(express.json()) // for parsing application/json
 
 const animals = ['Dog', 'Cat', 'Bird']
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
 
 app.get('/randomAnimal', (req, res) => {
   var array = JSON.parse(fs.readFileSync('pet-names.json', 'utf8'));
