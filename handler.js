@@ -1,8 +1,5 @@
 const fs = require('fs');
 
-// All supported animal arrays 
-const animals = ["Dog", "Cat", "Bird"]
-
 // Cached pets from the Array
 const pets = JSON.parse(fs.readFileSync('pets.json', 'utf8'));
 
@@ -10,7 +7,7 @@ module.exports.inudoption = (event, context, callback) => {
   // Default number of animals to return
   let count = 30;
   // Default species if no query params exist
-  let species = "Dog"
+  let species = ""
 
   if(event.queryStringParameters && event.queryStringParameters.count) {
     console.log("Received count:", event.queryStringParameters.count);
@@ -25,10 +22,15 @@ module.exports.inudoption = (event, context, callback) => {
   // Get pet array
   var requestedPets = []
   // Filter them by species
-  const filteredPetArray = pets.filter(pet => pet.animal == species)
-
-  for(var p = 0; p < count; p++) {
-    requestedPets.push(filteredPetArray[p]);
+  if (species) {
+    const filteredPetArray = pets.filter(pet => pet.animal == species)
+    for(var p = 0; p < count; p++) {
+      requestedPets.push(filteredPetArray[p]);
+    }
+  } else {
+    for(var p = 0; p < count; p++) {
+      requestedPets.push(pets[p]);
+    }
   }
 
   // Response
